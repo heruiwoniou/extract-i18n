@@ -1,5 +1,5 @@
-# extract-i18n README
+# Extract i18n
 
-Extrac characters and generate i18n file
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-
+Extract characters, translate and generate i18n file
