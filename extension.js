@@ -6,13 +6,13 @@ const fsExtra = require("fs-extra");
 const pify = require("pify");
 const translate = require("translate-google");
 const camelCase = require("camelcase");
-const fs = pify(fsExtra);
+const chokidar = require("chokidar");
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
-/**
- * @param {vscode.ExtensionContext} context
- */
+const fs = pify(fsExtra);
+const log = console.log.bind(console);
 
 const langs = {
   zh: "zh-cn",
@@ -22,7 +22,7 @@ const runtimeConfig = {
   manually: null,
   prefix: "extract-i18n.",
   target: ["en-US", "zh-CN"],
-	template: "t(\"{{key}}\")",
+  template: 't("{{key}}")',
   locales: [],
 };
 
@@ -37,22 +37,56 @@ function initializeConfig() {
         runtimeConfig.locales = folders.map((o) =>
           o.replace(/\/locales$/gi, "")
         );
+        log(vscode.workspace.rootPath);
+        let ready = false;
+        chokidar
+          .watch(`${vscode.workspace.rootPath}/`, {
+            ignored: ["**/node_modules/**", "**/.git/**"],
+          })
+          .on("addDir", (path) => {
+            if (ready && /locales$/.test(path)) {
+              log("add the cache locales");
+              runtimeConfig.locales = Array.from(
+                new Set([
+                  ...runtimeConfig.locales,
+                  path.replace(/\/locales$/gi, ""),
+                ])
+              );
+            }
+          })
+          .on("unlinkDir", (path) => {
+            if (ready && /locales$/.test(path)) {
+              const index = runtimeConfig.locales.indexOf(
+                path.replace(/\/locales$/gi, "")
+              );
+              if (index > -1) {
+                log("remove the cache locales");
+                runtimeConfig.locales.splice(index, 1);
+              }
+            }
+          })
+          .on("ready", () => {
+            ready = true;
+          });
         resolver();
       }
     );
   });
 }
 
+/**
+ * @param {vscode.ExtensionContext} context
+ */
 async function activate(context) {
   await initializeConfig();
-  console.log("Extract i18n Activated!");
+  log("Extract i18n Activated!");
   let disposable = vscode.commands.registerCommand(
     "extract-i18n.extract-i18n",
     async function () {
       try {
         const editor = vscode.window.activeTextEditor;
         const doc = editor.document;
-				const selection = editor.selection;
+        const selection = editor.selection;
         const extractText = doc
           .getText(editor.selection)
           .replace(/((^['"\s]+)|(['"\s]+$))/, "");
@@ -101,9 +135,9 @@ async function activate(context) {
             await fs.writeJson(targetPath, locale, { spaces: 2 });
           })
         );
-				editor.edit(editBuilder => {
-					editBuilder.replace(selection, transKey);
-				})
+        editor.edit((editBuilder) => {
+          editBuilder.replace(selection, transKey);
+        });
         vscode.window.showInformationMessage("Extract Success!");
       } catch (err) {
         vscode.window.showErrorMessage(err.message);
