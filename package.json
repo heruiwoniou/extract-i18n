@@ -54,7 +54,6 @@
     "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
     "google-translate-api": "^2.3.0",
-    "pify": "^5.0.0",
     "standard-version": "^9.3.2",
     "translate-google": "^1.5.0"
   },
