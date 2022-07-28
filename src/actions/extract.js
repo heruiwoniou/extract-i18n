@@ -2,9 +2,11 @@ const vscode = require("vscode");
 const translate = require("translate-google");
 const fs = require("fs-extra");
 const camelCase = require("camelcase");
-const { langs, runtimeConfig } = require("../config");
+const Config = require("../config");
 
-async function Extract() {
+// eslint-disable-next-line no-unused-vars
+async function Extract(ctx) {
+  const config = Config(ctx);
   try {
     const editor = vscode.window.activeTextEditor;
     const doc = editor.document;
@@ -20,9 +22,7 @@ async function Extract() {
     let localePath;
 
     do {
-      localePath = runtimeConfig.locales.find(
-        (o) => o.indexOf(paths.join("/")) > -1
-      );
+      localePath = config.locales.find((o) => o.indexOf(paths.join("/")) > -1);
       if (localePath) {
         break;
       }
@@ -33,13 +33,13 @@ async function Extract() {
       vscode.window.showErrorMessage("Can't find locale path!");
     }
 
-    const transKey = `${runtimeConfig.prefix}.${camelCase(commonKey)}`;
+    const transKey = `${config.runtimeConfig.prefix}.${camelCase(commonKey)}`;
 
     await Promise.all(
-      runtimeConfig.target.map(async (target) => {
+      config.runtimeConfig.target.map(async (target) => {
         const [type] = target.split("-");
         const transText = await translate(extractText, {
-          to: langs[type] || type,
+          to: config.langs[type] || type,
         });
         const targetPath = `${localePath}/locales/${target}.json`;
         if (!(await fs.pathExists(targetPath))) {
@@ -53,7 +53,7 @@ async function Extract() {
     editor.edit((editBuilder) => {
       editBuilder.replace(
         selection,
-        runtimeConfig.template.replace("{{key}}", transKey)
+        config.runtimeConfig.template.replace("{{key}}", transKey)
       );
     });
     vscode.window.showInformationMessage("Extract Success!");
@@ -64,6 +64,8 @@ async function Extract() {
 
 module.exports = (ctx) => {
   ctx.subscriptions.push(
-    vscode.commands.registerCommand("extract-i18n.extract-i18n", Extract)
+    vscode.commands.registerCommand("extract-i18n.extract-i18n", () =>
+      Extract(ctx)
+    )
   );
 };

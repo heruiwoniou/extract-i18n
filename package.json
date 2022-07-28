@@ -11,7 +11,10 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extract-i18n.extract-i18n"
+    "onCommand:extract-i18n.extract-i18n",
+    "onCommand:extract-i18n.modifyPrefix",
+    "onCommand:extract-i18n.modifyTarget",
+    "onCommand:extract-i18n.modifyTemplate"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -19,8 +22,52 @@
       {
         "command": "extract-i18n.extract-i18n",
         "title": "Extract i18n"
+      },
+      {
+        "command": "extract-i18n.modifyPrefix",
+        "title": "Extract i18n Modify prefix"
+      },
+      {
+        "command": "extract-i18n.modifyTarget",
+        "title": "Extract i18n modify target"
+      },
+      {
+        "command": "extract-i18n.modifyTemplate",
+        "title": "Extract i18n modify template"
       }
-    ]
+    ],
+    "configuration": {
+      "id": "extract-i18n",
+      "title": "Extract i18n",
+      "properties": {
+        "extract-i18n.pattern": {
+          "type": "string",
+          "default": "**/locales"
+        },
+        "extract-i18n.prefix": {
+          "type": "string",
+          "default": "extract-i18n"
+        },
+        "extract-i18n.target": {
+          "type": "array",
+          "default": [
+            "en",
+            "zh"
+          ]
+        },
+        "extract-i18n.template": {
+          "type": "string",
+          "default": "t(\"{{key}}\")"
+        },
+        "extract-i18n.langsMap": {
+          "type": "object",
+          "default": {
+            "zh": "zh-cn"
+          },
+          "description": "Value is used to convert to a language known by the Google API"
+        }
+      }
+    }
   },
   "scripts": {
     "setup": "npm install && npx simple-git-hooks",

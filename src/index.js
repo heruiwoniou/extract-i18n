@@ -7,8 +7,8 @@ const startWatch = require("./watch");
  * @param {vscode.ExtensionContext} context
  */
 async function activate(context) {
-  await startWatch();
-  actions.forEach((action) => action(context));
+  await startWatch(context);
+  actions.map((action) => action(context));
 }
 
 // this method is called when your extension is deactivated
