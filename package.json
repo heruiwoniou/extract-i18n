@@ -105,7 +105,6 @@
     "translate-google": "^1.5.0"
   },
   "simple-git-hooks": {
-    "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true",
     "pre-commit": "npm run lint-staged --concurrent false",
     "commit-msg": "npx --no-install commitlint --edit $1"
   },
