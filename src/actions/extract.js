@@ -33,14 +33,7 @@ async function Extract() {
       vscode.window.showErrorMessage("Can't find locale path!");
     }
 
-    const transKey =
-      runtimeConfig.prefix +
-      localePath
-        .replace(vscode.workspace.rootPath + "/", "")
-        .split("/")
-        .join(".") +
-      "." +
-      camelCase(commonKey);
+    const transKey = `${runtimeConfig.prefix}.${camelCase(commonKey)}`;
 
     await Promise.all(
       runtimeConfig.target.map(async (target) => {
@@ -58,7 +51,10 @@ async function Extract() {
       })
     );
     editor.edit((editBuilder) => {
-      editBuilder.replace(selection, transKey);
+      editBuilder.replace(
+        selection,
+        runtimeConfig.template.replace("{{key}}", transKey)
+      );
     });
     vscode.window.showInformationMessage("Extract Success!");
   } catch (err) {

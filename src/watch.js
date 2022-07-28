@@ -12,7 +12,7 @@ const log = console.log.bind(console);
 module.exports = function initializeConfig() {
   return new Promise((resolver) => {
     glob(
-      `${vscode.workspace.rootPath}/**/locales`,
+      `${vscode.workspace.workspaceFolders}/${runtimeConfig.pattern}`,
       {
         ignore: ["**/node_modules/**", "**/.git/**"],
       },
@@ -20,10 +20,10 @@ module.exports = function initializeConfig() {
         runtimeConfig.locales = folders.map((o) =>
           o.replace(/\/locales$/gi, "")
         );
-        log(vscode.workspace.rootPath);
+        log(vscode.workspace.workspaceFolders);
         let ready = false;
         chokidar
-          .watch(`${vscode.workspace.rootPath}/`, {
+          .watch(`${vscode.workspace.workspaceFolders}/`, {
             ignored: ["**/node_modules/**", "**/.git/**"],
           })
           .on("addDir", (path) => {

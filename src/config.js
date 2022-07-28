@@ -1,8 +1,8 @@
 module.exports = {
   runtimeConfig: {
-    manually: null,
+    pattern: "**/locale",
     prefix: "extract-i18n.",
-    target: ["en-US", "zh-CN"],
+    target: ["en", "zh"],
     template: 't("{{key}}")',
     locales: [],
   },
