@@ -4,16 +4,51 @@ const fs = require("fs-extra");
 const camelCase = require("camelcase");
 const Config = require("../config");
 
+function getText() {
+  const editor = vscode.window.activeTextEditor;
+  const doc = editor.document;
+  const selection = editor.selection;
+  const text = doc.getText(selection);
+  let anchor = [selection.anchor.line, selection.anchor.character];
+  let active = [selection.active.line, selection.active.character];
+  const lineText = doc.lineAt(selection.anchor.line).text;
+
+  if (
+    !text.startsWith('"') &&
+    !text.startsWith("'") &&
+    selection.anchor.character >= 1
+  ) {
+    const prefix = lineText.charAt(selection.anchor.character - 1);
+
+    if (['"', "'"].includes(prefix)) {
+      anchor = [selection.anchor.line, selection.anchor.character - 1];
+    }
+  }
+
+  if (!text.endsWith('"') && !text.endsWith("'")) {
+    const suffix = lineText.charAt(selection.active.character);
+    if (['"', "'"].includes(suffix)) {
+      active = [selection.active.line, selection.active.character + 1];
+    }
+  }
+
+  return {
+    text: lineText.slice(anchor[1], active[1]),
+    selection: new vscode.Selection(anchor[0], anchor[1], active[0], active[1]),
+    withParentheses:
+      /{\s*$/.test(lineText.slice(0, anchor[1])) &&
+      /^\s*}/.test(lineText.slice(active[1])),
+  };
+}
+
 // eslint-disable-next-line no-unused-vars
-async function Extract(ctx) {
+async function Extract(ctx, { templateAutoWithParentheses }) {
   const config = Config(ctx);
   try {
     const editor = vscode.window.activeTextEditor;
-    const doc = editor.document;
-    const selection = editor.selection;
-    const extractText = doc
-      .getText(editor.selection)
-      .replace(/((^['"\s]+)|(['"\s]+$))/, "");
+    const { text, selection, withParentheses } = getText();
+
+    const extractText = text.replace(/((^['"\s]+)|(['"\s]+$))/g, "");
 
     const commonKey = await translate(extractText, { to: "en" });
 
@@ -50,11 +85,15 @@ async function Extract(ctx) {
         await fs.writeJson(targetPath, locale, { spaces: 2 });
       })
     );
+    let template = config.runtimeConfig.template;
+    if (templateAutoWithParentheses) {
+      template = withParentheses
+        ? config.runtimeConfig.template
+        : `{${config.runtimeConfig.template}}`;
+    }
+
     editor.edit((editBuilder) => {
-      editBuilder.replace(
-        selection,
-        config.runtimeConfig.template.replace("{{key}}", transKey)
-      );
+      editBuilder.replace(selection, template.replace("{{key}}", transKey));
     });
     vscode.window.showInformationMessage("Extract Success!");
   } catch (err) {
@@ -64,8 +103,15 @@ async function Extract(ctx) {
 
 module.exports = (ctx) => {
   ctx.subscriptions.push(
-    vscode.commands.registerCommand("extract-i18n.extract-i18n", () =>
-      Extract(ctx)
+    vscode.commands.registerCommand("extract-i18n.extract-text", () =>
+      Extract(ctx, { templateAutoWithParentheses: false })
+    )
+  );
+
+  ctx.subscriptions.push(
+    vscode.commands.registerCommand(
+      "extract-i18n.extract-text-with-auto-brace",
+      () => Extract(ctx, { templateAutoWithParentheses: true })
     )
   );
 };

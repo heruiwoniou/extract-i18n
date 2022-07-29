@@ -11,7 +11,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extract-i18n.extract-i18n",
+    "onCommand:extract-i18n.extract-text",
+    "onCommand:extract-i18n.extract-text-with-auto-brace",
     "onCommand:extract-i18n.modifyPrefix",
     "onCommand:extract-i18n.modifyTarget",
     "onCommand:extract-i18n.modifyTemplate"
@@ -20,20 +21,24 @@
   "contributes": {
     "commands": [
       {
-        "command": "extract-i18n.extract-i18n",
-        "title": "Extract i18n"
+        "command": "extract-i18n.extract-text",
+        "title": "Extract Text"
+      },
+      {
+        "command": "extract-i18n.extract-text-with-auto-brace",
+        "title": "Extract Text With Auto Brace Wrapper"
       },
       {
         "command": "extract-i18n.modifyPrefix",
-        "title": "Extract i18n Modify prefix"
+        "title": "Extract Modify Prefix"
       },
       {
         "command": "extract-i18n.modifyTarget",
-        "title": "Extract i18n modify target"
+        "title": "Extract Modify Target"
       },
       {
         "command": "extract-i18n.modifyTemplate",
-        "title": "Extract i18n modify template"
+        "title": "Extract Modify Template"
       }
     ],
     "configuration": {
