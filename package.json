@@ -47,29 +47,33 @@
       "properties": {
         "extract-i18n.pattern": {
           "type": "string",
-          "default": "**/locales"
+          "default": "**/locales",
+          "description": "The pattern to extract i18n folders"
         },
         "extract-i18n.prefix": {
           "type": "string",
-          "default": "extract-i18n"
+          "default": "extract-i18n",
+          "description": "The prefix of the extracted string"
         },
         "extract-i18n.target": {
           "type": "array",
           "default": [
             "en",
             "zh"
-          ]
+          ],
+          "description": "The exported target language file"
         },
         "extract-i18n.template": {
           "type": "string",
-          "default": "t(\"{{key}}\")"
+          "default": "t(\"{{key}}\")",
+          "description": "The template of the extracted string"
         },
         "extract-i18n.langsMap": {
           "type": "object",
           "default": {
             "zh": "zh-cn"
           },
-          "description": "Value is used to convert to a language known by the Google API"
+          "description": "Value is used to convert to a language known by the Google API eg: cn (target filename) -> zh-cn"
         }
       }
     }
