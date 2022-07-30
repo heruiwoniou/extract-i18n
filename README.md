@@ -10,34 +10,33 @@ Extract characters, translate and generate i18n file
 
 # Commands
 
-> Red <span style="color:red">content</span> is selection content
-> Green <span style="color: green">replaced</span> is replaced content
+> `content` is selection content
 
 ## Extract Text
 
 Replace only the selected string (automatically includes the immediate quotation marks)
 
-- &lt;div&gt;<span style="color: red">Dashboard Title</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">t("extract-i18n.dashboardTitle")</span>&lt;/div&gt;
-- &lt;div&gt;<span style="color: red">"Dashboard Title"</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">t("extract-i18n.dashboardTitle")</span>&lt;/div&gt;
-- &lt;div&gt;<span style="color: red">'Dashboard Title'</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">t("extract-i18n.dashboardTitle)</span>&lt;/div&gt;
+- &lt;div&gt;`Dashboard Title`&lt;/div&gt;
+  - &lt;div&gt;`t("extract-i18n.dashboardTitle")`&lt;/div&gt;
+- &lt;div&gt;`"Dashboard Title"`&lt;/div&gt;
+  - &lt;div&gt;`t("extract-i18n.dashboardTitle")`&lt;/div&gt;
+- &lt;div&gt;`'Dashboard Title'`&lt;/div&gt;
+  - &lt;div&gt;`t("extract-i18n.dashboardTitle)`&lt;/div&gt;
 
 ## Extract Text With Auto Brace Wrapper
 
 Replace the selected string (automatically includes the immediate quotation marks) and auto wrapper the `{}`
 
-- &lt;div&gt;<span style="color: red">Dashboard Title</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">{t("extract-i18n.dashboardTitle")}</span>&lt;/div&gt;
-- &lt;div&gt;{<span style="color: red">"Dashboard Title"</span>}&lt;/div&gt;
-  - &lt;div&gt;{<span style="color: green">t("extract-i18n.dashboardTitle")</span>}&lt;/div&gt;
-- &lt;div&gt;<span style="color: red">"Dashboard Title"</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">{t("extract-i18n.dashboardTitle")}</span>&lt;/div&gt;
-- &lt;div&gt;<span style="color: red">'Dashboard Title'</span>&lt;/div&gt;
-  - &lt;div&gt;<span style="color: green">{t("extract-i18n.dashboardTitle)}</span>&lt;/div&gt;
-- &lt;div title="<span style="color: red">Dashboard Title</span>" /&gt;
-  - &lt;div title=<span style="color: green">{t("extract-i18n.dashboardTitle)}</span> /&gt;
+- &lt;div&gt;`Dashboard Title`&lt;/div&gt;
+  - &lt;div&gt;`{t("extract-i18n.dashboardTitle")}`&lt;/div&gt;
+- &lt;div&gt;{`"Dashboard Title"`}&lt;/div&gt;
+  - &lt;div&gt;{`t("extract-i18n.dashboardTitle")`}&lt;/div&gt;
+- &lt;div&gt;`"Dashboard Title"`&lt;/div&gt;
+  - &lt;div&gt;`{t("extract-i18n.dashboardTitle")}`&lt;/div&gt;
+- &lt;div&gt;`'Dashboard Title'`&lt;/div&gt;
+  - &lt;div&gt;`{t("extract-i18n.dashboardTitle)}`&lt;/div&gt;
+- &lt;div title="`Dashboard Title`" /&gt;
+  - &lt;div title=`{t("extract-i18n.dashboardTitle)}` /&gt;
 
 ## Extract Modify Prefix:
 
@@ -46,7 +45,7 @@ Modify the key prefix
 This is default replace content:
 
 ```
-t("<span style="color: red">extract-i18n</span>.dashboardTitle)
+t("extract-i18n.dashboardTitle)
 ```
 
 Modify default value `extract-i18n` -> `dashboards`
@@ -54,7 +53,7 @@ Modify default value `extract-i18n` -> `dashboards`
 The new replacement will look like this:
 
 ```
-t("<span style="color: green">dashboards</span>.dashboardTitle)
+t("dashboards.dashboardTitle)
 ```
 
 ## Extract Modify Target
