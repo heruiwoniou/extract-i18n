@@ -52,7 +52,7 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
 
     const commonKey = await translators[config.translate.engine](
       extractText,
-      config.translate.from,
+      config.langs[config.translate.from] || config.translate.from,
       config.langs["en"] || "en"
     );
 
@@ -79,7 +79,7 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
         const [type] = target.split("-");
         const transText = await translators[config.translate.engine](
           extractText,
-          config.translate.from,
+          config.langs[config.translate.from] || config.translate.from,
           config.langs[type] || type
         );
         const targetPath = `${localePath}/locales/${target}.json`;
