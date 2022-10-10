@@ -24,9 +24,6 @@ function Config(ctx) {
         engine: vscode.workspace
           .getConfiguration()
           .get("extract-i18n.translateEngine"),
-        key: vscode.workspace
-          .getConfiguration()
-          .get("extract-i18n.translateKey"),
       },
       pattern:
         vscode.workspace.getConfiguration().get("extract-i18n.pattern") ||

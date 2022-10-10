@@ -1,5 +1,5 @@
 const vscode = require("vscode");
-const translate = require("translate");
+const translators = require("translators");
 const fs = require("fs-extra");
 const camelCase = require("camelcase");
 const Config = require("../config");
@@ -50,10 +50,11 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
 
     const extractText = text.replace(/((^['"\s]+)|(['"\s]+$))/g, "");
 
-    const commonKey = await translate(extractText, {
-      to: "en",
-      ...config.translate,
-    });
+    const commonKey = await translators[config.translate.engine](
+      extractText,
+      config.translate.from,
+      config.langs["en"] || "en"
+    );
 
     let paths = vscode.window.activeTextEditor.document.fileName.split("/");
     paths = paths.slice(0, paths.length - 1);
@@ -76,10 +77,11 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
     await Promise.all(
       config.runtimeConfig.target.map(async (target) => {
         const [type] = target.split("-");
-        const transText = await translate(extractText, {
-          to: config.langs[type] || type,
-          ...config.translate,
-        });
+        const transText = await translators[config.translate.engine](
+          extractText,
+          config.translate.from,
+          config.langs[type] || type
+        );
         const targetPath = `${localePath}/locales/${target}.json`;
         if (!(await fs.pathExists(targetPath))) {
           await fs.outputFile(targetPath, "{}");

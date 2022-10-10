@@ -77,18 +77,19 @@
         },
         "extract-i18n.translateFrom": {
           "type": "string",
-          "default": "en",
-          "description": "the local language"
+          "default": "zh",
+          "description": "The local language"
         },
         "extract-i18n.translateEngine": {
           "type": "string",
-          "default": "google",
-          "description": "translation engines: google, yandex, libre, deepl"
-        },
-        "extract-i18n.translateKey": {
-          "type": "string",
-          "default": "TRANSLATE_KEY",
-          "description": "the key for translation engine"
+          "default": "googleTranslator",
+          "enum": [
+            "baiduTranslator",
+            "googleTranslator",
+            "youdaoTranslator",
+            "bingTranslator"
+          ],
+          "description": "translation engines"
         }
       }
     }
@@ -125,8 +126,7 @@
     "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
     "standard-version": "^9.3.2",
-    "translate": "^1.4.1",
-    "translate-google": "^1.5.0"
+    "translators": "^1.0.3"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint-staged --concurrent false",
