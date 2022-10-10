@@ -17,6 +17,17 @@ function Config(ctx) {
           vscode.workspace.getConfiguration().get("extract-i18n.template") ||
           't("{{key}}")',
       },
+      translate: {
+        from: vscode.workspace
+          .getConfiguration()
+          .get("extract-i18n.translateFrom"),
+        engine: vscode.workspace
+          .getConfiguration()
+          .get("extract-i18n.translateEngine"),
+        key: vscode.workspace
+          .getConfiguration()
+          .get("extract-i18n.translateKey"),
+      },
       pattern:
         vscode.workspace.getConfiguration().get("extract-i18n.pattern") ||
         "**/locales",
