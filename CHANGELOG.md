@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.6...v0.0.7) (2022-10-10)
+
+### Features
+
+- add the config for plugin ([02083ec](https://github.com/heruiwoniou/extract-i18n/commit/02083ec8697d2843fde0358e95d9d58d762949c5))
+- upgrade the translation engine ([25e855b](https://github.com/heruiwoniou/extract-i18n/commit/25e855b62c0cbf84307c4e763830f8056e3e4261))
+
 ### [0.0.6](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.5...v0.0.6) (2022-07-30)
 
 ### [0.0.5](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.3...v0.0.5) (2022-07-30)
