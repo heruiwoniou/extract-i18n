@@ -74,6 +74,21 @@
             "zh": "zh-cn"
           },
           "description": "Value is used to convert to a language known by the Google API eg: cn (target filename) -> zh-cn"
+        },
+        "extract-i18n.translateFrom": {
+          "type": "string",
+          "default": "en",
+          "description": "the local language"
+        },
+        "extract-i18n.translateEngine": {
+          "type": "string",
+          "default": "google",
+          "description": "translation engines: google, yandex, libre, deepl"
+        },
+        "extract-i18n.translateKey": {
+          "type": "string",
+          "default": "TRANSLATE_KEY",
+          "description": "the key for translation engine"
         }
       }
     }
