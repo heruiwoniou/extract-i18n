@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.8...v0.0.9) (2022-10-10)
+
+### Bug Fixes
+
+- using langs map to modify from lang key ([860c168](https://github.com/heruiwoniou/extract-i18n/commit/860c16837512635e50187dc0da62e0fb66099f2f))
+
 ### [0.0.8](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.7...v0.0.8) (2022-10-10)
 
 ### Features
