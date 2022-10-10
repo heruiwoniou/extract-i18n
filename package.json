@@ -101,7 +101,8 @@
     "test": "node ./test/runTest.js",
     "lint-staged": "lint-staged",
     "commit": "cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "build": "vsce package"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
