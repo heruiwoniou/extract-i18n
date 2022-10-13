@@ -47,10 +47,13 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
   try {
     const editor = vscode.window.activeTextEditor;
     const { text, selection, withParentheses } = getText();
+    const engine = vscode.workspace
+      .getConfiguration()
+      .get("extract-i18n.translateEngine");
 
     const extractText = text.replace(/((^['"\s]+)|(['"\s]+$))/g, "");
 
-    const commonKey = await translators[config.translate.engine](
+    const commonKey = await translators[engine](
       extractText,
       config.langs[config.translate.from] || config.translate.from,
       config.langs["en"] || "en"
@@ -74,14 +77,22 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
 
     const transKey = `${config.runtimeConfig.prefix}.${camelCase(commonKey)}`;
 
+    const transList = [["en", commonKey]];
     await Promise.all(
-      config.runtimeConfig.target.map(async (target) => {
-        const [type] = target.split("-");
-        const transText = await translators[config.translate.engine](
-          extractText,
-          config.langs[config.translate.from] || config.translate.from,
-          config.langs[type] || type
-        );
+      config.runtimeConfig.target
+        .filter((key) => key !== "en")
+        .map(async (target) => {
+          const [type] = target.split("-");
+          const transText = await translators[engine](
+            extractText,
+            config.langs[config.translate.from] || config.translate.from,
+            config.langs[type] || type
+          );
+          transList.push([target, transText]);
+        })
+    );
+    await Promise.all(
+      transList.map(async ([target, transText]) => {
         const targetPath = `${localePath}/locales/${target}.json`;
         if (!(await fs.pathExists(targetPath))) {
           await fs.outputFile(targetPath, "{}");
