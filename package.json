@@ -80,6 +80,10 @@
           "default": "zh",
           "description": "The local language"
         },
+        "extract-i18n.customEngineUrl": {
+          "type": "string",
+          "description": "Define the custom request to translate, the data structure see readme"
+        },
         "extract-i18n.translateEngine": {
           "type": "string",
           "default": "googleTranslator",
@@ -87,7 +91,8 @@
             "baiduTranslator",
             "googleTranslator",
             "youdaoTranslator",
-            "bingTranslator"
+            "bingTranslator",
+            "customTranslator"
           ],
           "description": "translation engines"
         }
