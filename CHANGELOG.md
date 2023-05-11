@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.6...v0.1.0) (2023-05-11)
+
+### ⚠ BREAKING CHANGES
+
+- 1. remove the from config
+
+### Features
+
+- add the config for plugin ([02083ec](https://github.com/heruiwoniou/extract-i18n/commit/02083ec8697d2843fde0358e95d9d58d762949c5))
+- change the engine to Bing Translate ([5798014](https://github.com/heruiwoniou/extract-i18n/commit/579801404395854d87944ea4030c9ea64486ad3a))
+- upgrade the translate engine ([4329386](https://github.com/heruiwoniou/extract-i18n/commit/43293864214b5cdec55ca386ffb9abb4fb639ebe))
+- upgrade the translation engine ([25e855b](https://github.com/heruiwoniou/extract-i18n/commit/25e855b62c0cbf84307c4e763830f8056e3e4261))
+
+### Bug Fixes
+
+- the modified engine value is obtained in real time ([194e712](https://github.com/heruiwoniou/extract-i18n/commit/194e7125d8380ba7a8b59b14e2c9d065ba6486bb))
+- using langs map to modify from lang key ([860c168](https://github.com/heruiwoniou/extract-i18n/commit/860c16837512635e50187dc0da62e0fb66099f2f))
+
 ### [0.0.11](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.10...v0.0.11) (2022-10-13)
 
 ### [0.0.10](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.6...v0.0.10) (2022-10-13)
