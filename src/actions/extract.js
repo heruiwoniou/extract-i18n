@@ -1,5 +1,5 @@
 const vscode = require("vscode");
-const translators = require("translators");
+const { translate } = require("bing-translate-api");
 const fs = require("fs-extra");
 const camelCase = require("camelcase");
 const Config = require("../config");
@@ -47,17 +47,17 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
   try {
     const editor = vscode.window.activeTextEditor;
     const { text, selection, withParentheses } = getText();
-    const engine = vscode.workspace
-      .getConfiguration()
-      .get("extract-i18n.translateEngine");
 
     const extractText = text.replace(/((^['"\s]+)|(['"\s]+$))/g, "");
 
-    const commonKey = await translators[engine](
+    const response = await translate(
       extractText,
-      config.langs[config.translate.from] || config.translate.from,
-      config.langs["en"] || "en"
+      null,
+      config.langs[config.runtimeConfig.target[1]] ||
+        config.runtimeConfig.target[1]
     );
+
+    const commonKey = response.translation;
 
     let paths = vscode.window.activeTextEditor.document.fileName.split("/");
     paths = paths.slice(0, paths.length - 1);
@@ -77,18 +77,17 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
 
     const transKey = `${config.runtimeConfig.prefix}.${camelCase(commonKey)}`;
 
-    const transList = [["en", commonKey]];
+    const transList = [[config.runtimeConfig.target[1], commonKey]];
     await Promise.all(
       config.runtimeConfig.target
-        .filter((key) => key !== "en")
+        .filter((key) => key !== config.runtimeConfig.target[1])
         .map(async (target) => {
-          const [type] = target.split("-");
-          const transText = await translators[engine](
+          const res = await translate(
             extractText,
-            config.langs[config.translate.from] || config.translate.from,
-            config.langs[type] || type
+            null,
+            config.langs[target] || target
           );
-          transList.push([target, transText]);
+          transList.push([target, res.translation]);
         })
     );
     await Promise.all(

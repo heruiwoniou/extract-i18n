@@ -17,22 +17,11 @@ function Config(ctx) {
           vscode.workspace.getConfiguration().get("extract-i18n.template") ||
           't("{{key}}")',
       },
-      translate: {
-        from: vscode.workspace
-          .getConfiguration()
-          .get("extract-i18n.translateFrom"),
-        engine: vscode.workspace
-          .getConfiguration()
-          .get("extract-i18n.translateEngine"),
-      },
       pattern:
         vscode.workspace.getConfiguration().get("extract-i18n.pattern") ||
         "**/locales",
-      langs: vscode.workspace
-        .getConfiguration()
-        .get("extract-i18n.langsMap") || {
-        zh: "zh-cn",
-      },
+      langs:
+        vscode.workspace.getConfiguration().get("extract-i18n.langsMap") || {},
       locales: [],
     };
   }
