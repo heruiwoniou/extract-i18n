@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.1...v0.1.2) (2023-09-19)
+
+### Bug Fixes
+
+- fixed a search bug ([09bf387](https://github.com/heruiwoniou/extract-i18n/commit/09bf387e874a95c8ed88815d369ccd58f8faa3e4))
+
 ### [0.1.1](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.0...v0.1.1) (2023-09-19)
 
 ### Bug Fixes
