@@ -67,7 +67,7 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
       const localePaths = config.locales
         .filter((o) => o.indexOf(paths.join("/")) > -1)
         .sort((a, b) => a.length - b.length);
-      if (localePaths) {
+      if (localePaths.length > 0) {
         localePath = localePaths[0];
         break;
       }
