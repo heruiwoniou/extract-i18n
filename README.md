@@ -10,26 +10,6 @@ Extract characters, translate and generate i18n file
 
 # Setting
 
-## translateEngine.customEngine
-
-If you want to use the custom requesting to translate, you must define the `customEngine` config
-
-The `customEngine` data structure like blow:
-
-```
-{
-  url: 'http://fanyi.youdao.com/openapi.do?keyfrom=123aab&key=cccdfdf&type=data&doctype=json&version=1.1&q=<text>',
-  path: 'translation[0]'
-}
-
-// The values in Angle brackets defined above will be matched to the following data that is passed by program.
-{
-  text: 'Hello world',
-  from: 'zh',
-  to: 'en'
-}
-```
-
 # Commands
 
 > `content` is selection content
