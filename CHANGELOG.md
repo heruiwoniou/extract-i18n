@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.0...v0.1.1) (2023-09-19)
+
+### Bug Fixes
+
+- fixed the issue in querying file paths ([db86883](https://github.com/heruiwoniou/extract-i18n/commit/db868830ca0e29e71adfa8218a8ceb530e39b0d0))
+
 ## [0.1.0](https://github.com/heruiwoniou/extract-i18n/compare/v0.0.6...v0.1.0) (2023-05-11)
 
 ### ⚠ BREAKING CHANGES
