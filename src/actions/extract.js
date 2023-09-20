@@ -59,13 +59,15 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
 
     const commonKey = response.translation;
 
-    let paths = vscode.window.activeTextEditor.document.fileName.split("/");
-    paths = paths.slice(0, paths.length - 1);
+    let originalPaths = vscode.window.activeTextEditor.document.fileName
+      .split("/")
+      .slice(0, -1);
+    const paths = originalPaths;
     let localePath;
 
     do {
       const localePaths = config.locales
-        .filter((o) => o.indexOf(paths.join("/")) > -1)
+        .filter((o) => o.split("/").join("/") === paths.join("/"))
         .sort((a, b) => a.length - b.length);
       if (localePaths.length > 0) {
         localePath = localePaths[0];
@@ -75,7 +77,9 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
     } while (paths.length !== 0);
 
     if (!localePath) {
-      vscode.window.showErrorMessage("Can't find locale path!");
+      const dir = [originalPaths, "locales"].join("/");
+      await fs.mkdirp(dir);
+      localePath = dir;
     }
 
     const transKey = `${config.runtimeConfig.prefix}.${camelCase(commonKey)}`;
