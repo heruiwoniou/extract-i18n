@@ -45,10 +45,10 @@
       "id": "extract-i18n",
       "title": "Extract i18n",
       "properties": {
-        "extract-i18n.pattern": {
+        "extract-i18n.directory": {
           "type": "string",
-          "default": "**/locales",
-          "description": "The pattern to extract i18n folders"
+          "default": "locales",
+          "description": "Name of the directory to be monitored"
         },
         "extract-i18n.prefix": {
           "type": "string",
@@ -73,7 +73,7 @@
           "default": {
             "zh-CN": "zh-Hans"
           },
-          "description": "Used to convert target values into language identifiers that are recognized by the translation interface"
+          "description": "Because the lang value required by the translation interface is not necessarily the same as the configuration of the target file, you need to use this configuration to map the lang value to be passed into the translation interface"
         }
       }
     }

@@ -17,9 +17,9 @@ function Config(ctx) {
           vscode.workspace.getConfiguration().get("extract-i18n.template") ||
           't("{{key}}")',
       },
-      pattern:
-        vscode.workspace.getConfiguration().get("extract-i18n.pattern") ||
-        "**/locales",
+      directory:
+        vscode.workspace.getConfiguration().get("extract-i18n.directory") ||
+        "locales",
       langs:
         vscode.workspace.getConfiguration().get("extract-i18n.langsMap") || {},
       locales: [],
@@ -29,10 +29,34 @@ function Config(ctx) {
   return config;
 }
 
-Config.update = (key, value) => {
+Config.update = (key, value, isBase = false) => {
   if (config) {
-    config.runtimeConfig[key] = value;
+    if (!isBase) {
+      config.runtimeConfig[key] = value;
+    } else {
+      config[key] = value;
+    }
   }
 };
 
 module.exports = Config;
+module.exports.watchConfig = () => {
+  vscode.workspace.onDidChangeConfiguration((event) => {
+    [
+      { name: "prefix", isBase: false },
+      { name: "target", isBase: false },
+      { name: "template", isBase: false },
+      { name: "directory", isBase: true },
+      { name: "langsMap", key: "langs", isBase: true },
+    ].forEach((item) => {
+      if (event.affectsConfiguration(`extract-i18n.${item.name}`)) {
+        const key = item.key || item.name;
+        const isBase = item.isBase;
+        const value = vscode.workspace
+          .getConfiguration()
+          .get(`extract-i18n.${item.name}`);
+        Config.update(key, value, isBase);
+      }
+    });
+  });
+};

@@ -73,11 +73,14 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
         localePath = localePaths[0];
         break;
       }
+      if (paths.join("/") === vscode.workspace.rootPath) {
+        break;
+      }
       paths.pop();
     } while (paths.length !== 0);
 
     if (!localePath) {
-      const dir = [originalPaths, "locales"].join("/");
+      const dir = [...originalPaths].join("/");
       await fs.mkdirp(dir);
       localePath = dir;
     }
@@ -99,7 +102,7 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
     );
     await Promise.all(
       transList.map(async ([target, transText]) => {
-        const targetPath = `${localePath}/locales/${target}.json`;
+        const targetPath = `${localePath}/${config.directory}/${target}.json`;
         if (!(await fs.pathExists(targetPath))) {
           await fs.outputFile(targetPath, "{}");
         }

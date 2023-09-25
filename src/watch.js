@@ -12,13 +12,16 @@ const log = console.log.bind(console);
 module.exports = function initializeConfig(ctx) {
   return new Promise((resolver) => {
     const config = Config(ctx);
+    const directory = config.directory;
     glob(
-      `${vscode.workspace.rootPath}/${config.pattern}`,
+      `${vscode.workspace.rootPath}/**/${directory}`,
       {
         ignore: ["**/node_modules/**", "**/.git/**"],
       },
       function (err, folders) {
-        config.locales = folders.map((o) => o.replace(/\/locales$/gi, ""));
+        config.locales = folders.map((o) =>
+          o.replace(new RegExp(`/${directory}$`, "gi"), "")
+        );
         log(vscode.workspace.rootPath);
         let ready = false;
         chokidar
@@ -26,17 +29,20 @@ module.exports = function initializeConfig(ctx) {
             ignored: ["**/node_modules/**", "**/.git/**"],
           })
           .on("addDir", (path) => {
-            if (ready && /locales$/.test(path)) {
+            if (ready && new RegExp(`${directory}$`).test(path)) {
               log("add the cache locales");
               config.locales = Array.from(
-                new Set([...config.locales, path.replace(/\/locales$/gi, "")])
+                new Set([
+                  ...config.locales,
+                  path.replace(new RegExp(`/${directory}$`), ""),
+                ])
               );
             }
           })
           .on("unlinkDir", (path) => {
-            if (ready && /locales$/.test(path)) {
+            if (ready && new RegExp(`${directory}$`).test(path)) {
               const index = config.locales.indexOf(
-                path.replace(/\/locales$/gi, "")
+                path.replace(new RegExp(`/${directory}$`), "")
               );
               if (index > -1) {
                 log("remove the cache locales");
