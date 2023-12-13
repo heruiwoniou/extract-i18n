@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.5...v0.1.6) (2023-12-13)
+
+### Features
+
+- add a custom engine and custom url config ([66bd418](https://github.com/heruiwoniou/extract-i18n/commit/66bd4184aae26591a3eb591e5f79ce522ecc29c8))
+
 ### [0.1.5](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.4...v0.1.5) (2023-11-13)
 
 ### [0.1.4](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.3...v0.1.4) (2023-09-25)
