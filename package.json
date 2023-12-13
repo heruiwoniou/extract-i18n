@@ -70,10 +70,25 @@
         },
         "extract-i18n.langsMap": {
           "type": "object",
-          "default": {
-            "zh-CN": "zh-Hans"
-          },
+          "default": {},
           "description": "Because the lang value required by the translation interface is not necessarily the same as the configuration of the target file, you need to use this configuration to map the lang value to be passed into the translation interface"
+        },
+        "extract-i18n.engine": {
+          "type": "string",
+          "default": "bing",
+          "enum": [
+            "bing",
+            "custom"
+          ],
+          "enumDescriptions": [
+            "use the bing-translate-api package to translate",
+            "use custom http server to translate"
+          ]
+        },
+        "extract-i18n.customUrl": {
+          "type": "string",
+          "default": "",
+          "description": "The custom url of the custom http server"
         }
       }
     }
@@ -112,6 +127,7 @@
     "chokidar": "^3.5.3",
     "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
+    "node-fetch": "^2.7.0",
     "standard-version": "^9.3.2"
   },
   "simple-git-hooks": {

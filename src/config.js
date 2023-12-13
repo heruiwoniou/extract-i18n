@@ -20,6 +20,12 @@ function Config(ctx) {
       directory:
         vscode.workspace.getConfiguration().get("extract-i18n.directory") ||
         "locales",
+      engine:
+        vscode.workspace.getConfiguration().get("extract-i18n.engine") ||
+        "bing",
+      customUrl: vscode.workspace
+        .getConfiguration()
+        .get("extract-i18n.customUrl"),
       langs:
         vscode.workspace.getConfiguration().get("extract-i18n.langsMap") || {},
       locales: [],
@@ -48,6 +54,8 @@ module.exports.watchConfig = () => {
       { name: "template", isBase: false },
       { name: "directory", isBase: true },
       { name: "langsMap", key: "langs", isBase: true },
+      { name: "engine", isBase: true },
+      { name: "customUrl", isBase: true },
     ].forEach((item) => {
       if (event.affectsConfiguration(`extract-i18n.${item.name}`)) {
         const key = item.key || item.name;

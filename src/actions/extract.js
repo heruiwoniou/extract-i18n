@@ -1,8 +1,30 @@
 const vscode = require("vscode");
-const { translate } = require("bing-translate-api");
+const fetch = require("node-fetch");
+const { translate: defaultTranslate } = require("bing-translate-api");
 const fs = require("fs-extra");
 const camelCase = require("camelcase");
 const Config = require("../config");
+
+async function translate({ text, from = null, to }, config) {
+  if (config.engine === "default" && !config.customUrl)
+    return defaultTranslate(text, from, to);
+  else {
+    // @ts-ignore
+    return fetch(
+      config.customUrl +
+        "?" +
+        new URLSearchParams({ text, from: from || "auto", to }).toString(),
+      { method: "GET" }
+    ).then(async (response) => {
+      if (response.ok) {
+        return {
+          translation: await response.text(),
+        };
+      }
+      throw new Error("Request Fail:" + response.statusText);
+    });
+  }
+}
 
 function getText() {
   const editor = vscode.window.activeTextEditor;
@@ -51,10 +73,13 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
     const extractText = text.replace(/((^['"\s]+)|(['"\s]+$))/g, "");
 
     const response = await translate(
-      extractText,
-      null,
-      config.langs[config.runtimeConfig.target[1]] ||
-        config.runtimeConfig.target[1]
+      {
+        text: extractText,
+        to:
+          config.langs[config.runtimeConfig.target[1]] ||
+          config.runtimeConfig.target[1],
+      },
+      config
     );
 
     const commonKey = response.translation;
@@ -93,9 +118,11 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
         .filter((key) => key !== config.runtimeConfig.target[1])
         .map(async (target) => {
           const res = await translate(
-            extractText,
-            null,
-            config.langs[target] || target
+            {
+              text: extractText,
+              to: config.langs[target] || target,
+            },
+            config
           );
           transList.push([target, res.translation]);
         })

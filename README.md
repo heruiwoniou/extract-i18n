@@ -71,3 +71,13 @@ The target's value (`zh`) maybe is not a keyword for translate api, it should be
 ## Extract Modify Template
 
 default value: `t("{{key}}")`
+
+## Extract Engine
+
+default is use `bing-translate-api`
+you can choose use custom service eg: [extract-i18n-service](https://github.com/heruiwoniou/extract-i18n-server)
+
+### Extract CustomUrl
+
+if engine is custom, translate will through this api to get result
+request: `fetch("${custom}?to=en&text=你好", { method: 'GET' }).then(response => response.text())`
