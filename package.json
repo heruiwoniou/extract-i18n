@@ -121,7 +121,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@vscode/vsce": "^2.19.0",
+    "@vscode/vsce": "^2.22.0",
     "bing-translate-api": "^2.9.2",
     "camelcase": "^6.3.0",
     "chokidar": "^3.5.3",
