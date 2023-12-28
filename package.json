@@ -2,7 +2,7 @@
   "name": "extract-i18n",
   "displayName": "Extract-i18n",
   "description": "extract the translation",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "publisher": "heruiwoniou",
   "engines": {
     "vscode": "^1.66.0"

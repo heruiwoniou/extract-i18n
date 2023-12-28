@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.6...v0.1.7) (2023-12-28)
+
+### Bug Fixes
+
+- fixed engine issue ([11a4c0c](https://github.com/heruiwoniou/extract-i18n/commit/11a4c0c019a6f28e42b729348e1ef6c2b7592a8f))
+
 ### [0.1.6](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.5...v0.1.6) (2023-12-13)
 
 ### Features
