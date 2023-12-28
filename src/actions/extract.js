@@ -6,9 +6,11 @@ const camelCase = require("camelcase");
 const Config = require("../config");
 
 async function translate({ text, from = null, to }, config) {
-  if (config.engine === "default" && !config.customUrl)
-    return defaultTranslate(text, from, to);
+  if (config.engine === "bing") return defaultTranslate(text, from, to);
   else {
+    if (!config.customUrl) {
+      throw new Error("Please configure the custom request url first");
+    }
     // @ts-ignore
     return fetch(
       config.customUrl +
