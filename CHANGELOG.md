@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.7...v0.1.8) (2024-01-18)
+
+### Features
+
+- add storeFileType and jsModuleType properties to control store file type ([77bdf9b](https://github.com/heruiwoniou/extract-i18n/commit/77bdf9baad52e9296d5bc0dcbc7ce8371782fcd5))
+
 ### [0.1.7](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.6...v0.1.7) (2023-12-28)
 
 ### Bug Fixes
