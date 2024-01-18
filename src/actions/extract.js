@@ -5,6 +5,49 @@ const fs = require("fs-extra");
 const camelCase = require("camelcase");
 const Config = require("../config");
 
+async function readAndWriteJson({
+  localePath,
+  directory,
+  target,
+  transKey,
+  transText,
+  // eslint-disable-next-line no-unused-vars
+  jsModuleType,
+}) {
+  const targetPath = `${localePath}/${directory}/${target}.json`;
+  if (!(await fs.pathExists(targetPath))) {
+    await fs.outputFile(targetPath, "{}");
+  }
+  const locale = await fs.readJson(targetPath);
+  locale[transKey] = transText;
+  await fs.writeJson(targetPath, locale, { spaces: 2 });
+}
+async function readAndWriteJs({
+  localePath,
+  directory,
+  target,
+  transKey,
+  transText,
+  jsModuleType,
+}) {
+  const targetPath = `${localePath}/${directory}/${target}.js`;
+  const prefix =
+    jsModuleType === "Module" ? "export default " : "module.exports = ";
+  if (!(await fs.pathExists(targetPath))) {
+    await fs.outputFile(targetPath, `${prefix}{}`);
+  }
+  const fileString = await fs.readFile(targetPath, "utf8");
+  const locale = eval(
+    "(" + fileString.replace(/^[^{]+/, "").replace(/[^}]*$/, "") + ")"
+  );
+  locale[transKey] = transText;
+  await fs.outputFile(
+    targetPath,
+    `${prefix}${JSON.stringify(locale, null, 2)}`,
+    "utf-8"
+  );
+}
+
 async function translate({ text, from = null, to }, config) {
   if (config.engine === "bing") return defaultTranslate(text, from, to);
   else {
@@ -129,15 +172,18 @@ async function Extract(ctx, { templateAutoWithParentheses }) {
           transList.push([target, res.translation]);
         })
     );
+    const readAndWriteAction =
+      config.storeFileType === "json" ? readAndWriteJson : readAndWriteJs;
     await Promise.all(
       transList.map(async ([target, transText]) => {
-        const targetPath = `${localePath}/${config.directory}/${target}.json`;
-        if (!(await fs.pathExists(targetPath))) {
-          await fs.outputFile(targetPath, "{}");
-        }
-        const locale = await fs.readJson(targetPath);
-        locale[transKey] = transText;
-        await fs.writeJson(targetPath, locale, { spaces: 2 });
+        await readAndWriteAction({
+          localePath,
+          directory: config.directory,
+          target,
+          transKey,
+          transText,
+          jsModuleType: config.jsModuleType,
+        });
       })
     );
     let template = config.runtimeConfig.template;

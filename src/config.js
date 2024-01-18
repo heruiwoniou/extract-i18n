@@ -29,6 +29,12 @@ function Config(ctx) {
       langs:
         vscode.workspace.getConfiguration().get("extract-i18n.langsMap") || {},
       locales: [],
+      storeFileType:
+        vscode.workspace.getConfiguration().get("extract-i18n.storeFileType") ||
+        "json",
+      jsModuleType:
+        vscode.workspace.getConfiguration().get("extract-i18n.jsModuleType") ||
+        "Module",
     };
   }
 

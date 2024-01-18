@@ -73,6 +73,24 @@
           "default": {},
           "description": "Because the lang value required by the translation interface is not necessarily the same as the configuration of the target file, you need to use this configuration to map the lang value to be passed into the translation interface"
         },
+        "extract-i18n.storeFileType": {
+          "type": "string",
+          "default": "js",
+          "enum": [
+            "js",
+            "json"
+          ],
+          "description": "The type of the exported file"
+        },
+        "extract-i18n.jsModuleType": {
+          "type": "string",
+          "default": "Module",
+          "enum": [
+            "Module",
+            "CommonJS"
+          ],
+          "description": "Defined the export method of the exported js file"
+        },
         "extract-i18n.engine": {
           "type": "string",
           "default": "bing",
