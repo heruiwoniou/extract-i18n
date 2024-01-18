@@ -75,10 +75,10 @@
         },
         "extract-i18n.storeFileType": {
           "type": "string",
-          "default": "js",
+          "default": "json",
           "enum": [
-            "js",
-            "json"
+            "json",
+            "js"
           ],
           "description": "The type of the exported file"
         },
