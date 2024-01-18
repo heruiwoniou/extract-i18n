@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.8...v0.1.9) (2024-01-18)
+
+### Bug Fixes
+
+- set storeFileType default as json ([83815d5](https://github.com/heruiwoniou/extract-i18n/commit/83815d52a185b139d366851dbf5e8d63e88003fa))
+
 ### [0.1.8](https://github.com/heruiwoniou/extract-i18n/compare/v0.1.7...v0.1.8) (2024-01-18)
 
 ### Features
