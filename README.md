@@ -75,7 +75,10 @@ default value: `t("{{key}}")`
 ## Extract Engine
 
 default is use `bing-translate-api`
-you can choose use custom service eg: [extract-i18n-service](https://github.com/heruiwoniou/extract-i18n-server)
+you can choose use custom service eg:
+
+- [extract-i18n-service](https://github.com/heruiwoniou/extract-i18n-server)
+- [extract-i18n-service-ollama](https://github.com/heruiwoniou/extract-i18n-server-ollama)
 
 ### Extract CustomUrl
 
